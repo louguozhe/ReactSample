@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!--Font-Awesome-->
+    <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+
+    <!--SpreadJS Css-->
+    <link rel="stylesheet" href="css/gc.spread.sheets.excel2013white.11.0.0.css" title="spread-theme"/>
+
+    <link rel="stylesheet" href="css/inspector.css"/>
+    <link rel="stylesheet" href="css/insp-table-format.css"/>
+    <link rel="stylesheet" href="css/insp-slicer-format.css"/>
+    <link rel="stylesheet" href="css/insp-conditional-formatting.css"/>
+    <link rel="stylesheet" href="css/colorpicker.css"/>
+    <link rel="stylesheet" href="css/borderpicker.css"/>
+    <link rel="stylesheet" href="css/insp-spread.css"/>
+    <link rel="stylesheet" href="css/sample.css"/>
+
+    <!--jQuery References-->
+    <script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui-1.10.3.custom.min.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="scripts/gc.spread.sheets.all.11.0.0.min.js"></script>
+    <script type="text/javascript" src="scripts/gc.spread.sheets.charts.11.0.0.min.js"></script>
+    <script type="text/javascript" src="scripts/gc.spread.sheets.print.11.0.0.min.js"></script>
+    <script type="text/javascript" src="scripts/gc.spread.excelio.11.0.0.min.js"></script>
+    <script type="text/javascript" src="scripts/gc.spread.sheets.resources.zh.11.0.0.min.js"></script>
+    <script type="text/javascript" src="scripts/license.js"></script>
+    <script type="text/javascript" src="scripts/FileSaver.min.js"></script>
+    <script type="text/javascript" src="scripts/resources.js"></script>
+    <!--<script type="text/javascript" src="scripts/sample.js"></script>-->
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="colorpicker" class="colorpicker" style="left: 983.75px; top: 88px;">
+      <div class="cp-pointer right" style="left: 246px; top: 222px;"></div>
+      <div class="cp-container">
+        <div class="tab-content">
+          <div id="theme-color" class="tab-pane active">
+            <!--<div class="color-cells-container">-->
+              <!--<h2 class="color-group-header localize">@colorPicker.themeColors@</h2>-->
+              <!--<ul id="default-theme-color">-->
+              <!--</ul>-->
+            <!--</div>-->
+            <div class="colorpicker-standard-color">
+              <h2 class="color-group-header localize">标准色</h2>
+              <div class="cp-indent">
+                <ul>
+                  <li class="color-cell standard-color-cell" style="background-color: rgb(192, 0, 0);"></li>
+
+                  <li class="color-cell standard-color-cell" style="background-color: rgb(255, 0, 0);"></li>
+
+                  <li class="color-cell standard-color-cell" style="background-color: rgb(255, 192, 0);"></li>
+
+                  <li class="color-cell standard-color-cell" style="background-color: rgb(255, 255, 0);"></li>
+
+                  <li class="color-cell standard-color-cell"
+                      style="background-color: rgb(146, 208, 80);"></li>
+
+                  <li class="color-cell standard-color-cell" style="background-color: rgb(0, 176, 80);"></li>
+
+                  <li class="color-cell standard-color-cell" style="background-color: rgb(0, 176, 240);"></li>
+
+                  <li class="color-cell standard-color-cell" style="background-color: rgb(0, 112, 192);"></li>
+
+                  <li class="color-cell standard-color-cell" style="background-color: rgb(0, 32, 96);"></li>
+
+                  <li class="color-cell standard-color-cell"
+                      style="background-color: rgb(112, 48, 160);"></li>
+
+                </ul>
+              </div>
+            </div>
+            <div class="nofill-color">
+              <ul>
+                <li class="color-cell auto-color-cell localize">@colorPicker.noFills@</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
