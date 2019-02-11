@@ -13,7 +13,7 @@ class buttonOptionComponent extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("buttonOption componentWillReceiveProps:",nextProps)
+        // console.log("buttonOption componentWillReceiveProps:",nextProps)
     }
 
     getButtonDiv(item){

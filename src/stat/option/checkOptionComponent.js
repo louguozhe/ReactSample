@@ -7,7 +7,7 @@ export default class extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("checkOption componentWillReceiveProps:",nextProps)
+        // console.log("checkOption componentWillReceiveProps:",nextProps)
     }
 
     render(){

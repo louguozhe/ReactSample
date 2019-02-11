@@ -8,8 +8,9 @@ import NumberOption from "../option/numberOptionComponent";
 import ColorOption from "../option/colorOptionComponent";
 import ButtonOption from "../option/buttonOptionComponent";
 import connect from "react-redux/es/connect/connect";
+import {TabType} from "../../store/reducers/spread/actions";
 
-class sheetTabContent extends Component {
+class statTabContent extends Component {
 
     constructor(props) {
         super(props);
@@ -108,17 +109,25 @@ class sheetTabContent extends Component {
 
     render(){
        return (
-           <TabContent data={{id:"sheetTab"}}>
+           <TabContent data={{id:"statTab",active: true}} >
                <GroupWapper>
                    <Group data={{name:"通用",collapsed:false}}>
-                       <TextOption {...this.props} data={{name:"名称",value:this.props.activeSheet?this.props.activeSheet.name():""}}
-                                   onTextChange={e => {this.onTextChange(e,'sheetName')}}
-                       />
+                       {/*<TextOption {...this.props} data={{name:"名称",value:this.props.activeSheet?this.props.activeSheet.name():""}}*/}
+                                   {/*onTextChange={e => {this.onTextChange(e,'sheetName')}}*/}
+                       {/*/>*/}
                        <NumberOption {...this.props} data={{name:"行数",value:this.props.activeSheet?this.props.activeSheet.getRowCount():0}}
                                    onNumberChange={e => {this.onNumberChange(e,'rowCount')}}
                        />
                        <NumberOption {...this.props} data={{name:"列数",value:this.props.activeSheet?this.props.activeSheet.getColumnCount():0}}
                                      onNumberChange={e => {this.onNumberChange(e,'columnCount')}}
+                       />
+                       <CheckOption {...this.props}
+                                    data={{name:"垂直线",checked:this.props.activeSheet?this.props.activeSheet.options.gridline.showVerticalGridline:false}}
+                                    onOptionChange={e=>this.onOptionChange(e,"showVerticalGridline")}
+                       />
+                       <CheckOption {...this.props}
+                                    data={{name:"水平线",checked:this.props.activeSheet?this.props.activeSheet.options.gridline.showHorizontalGridline:false}}
+                                    onOptionChange={e=>this.onOptionChange(e,"showHorizontalGridline")}
                        />
                        <ColorOption {...this.props} data={{name:"背景色",value:this.props.activeSheet?this.props.activeSheet.options.sheetTabColor:"rgba(0, 0, 0, 0)"}}
                                     onColorChange={e => {this.onColorChange(e,'sheetTabColor')}}
@@ -134,15 +143,10 @@ class sheetTabContent extends Component {
                        <ButtonOption data={[{name:"冻结",value:"freezePane"},{name:"取消冻结",value:"unfreeze"}]}
                                      onButtonClick={e => {this.onButtonClick(e,this)}}
                        />
-                   </Group>                  <Group data={{name:"表格线",collapsed:false}}>
-                       <CheckOption {...this.props}
-                                    data={{name:"垂直线",checked:this.props.activeSheet?this.props.activeSheet.options.gridline.showVerticalGridline:false}}
-                                    onOptionChange={e=>this.onOptionChange(e,"showVerticalGridline")}
-                       />
-                       <CheckOption {...this.props}
-                                    data={{name:"水平线",checked:this.props.activeSheet?this.props.activeSheet.options.gridline.showHorizontalGridline:false}}
-                                    onOptionChange={e=>this.onOptionChange(e,"showHorizontalGridline")}
-                       />
+                   </Group>
+                   <Group data={{name:"表头",collapsed:false}}>
+                   </Group>
+                   <Group data={{name:"表旁",collapsed:false}}>
                    </Group>
                </GroupWapper>
            </TabContent>
@@ -152,8 +156,9 @@ class sheetTabContent extends Component {
 
 const getStoreProps = state => {
     return {
-        activeSheet: state.spread.activeSheet
+        activeSheet: state.spread.activeSheet,
+        activeTabType: state.spread.activeTabType
     }
 }
 
-export default connect(getStoreProps)(sheetTabContent)
+export default connect(getStoreProps)(statTabContent)

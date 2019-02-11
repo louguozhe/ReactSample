@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import './Style.css'
-import Menu from './menu'
+import Menu from './topMenu'
 import RightPanel from './rightPanel'
-import {InitSpreadAction,ActiveSheetAction} from '../store/reducers/spread/actions'
+import {InitSpreadAction, ActiveSheetAction, ActiveTabAction, TabType} from '../store/reducers/spread/actions'
 import connect from "react-redux/es/connect/connect";
+import {getCellInfo} from '../utils/spreadHelper'
+import {StatDimension, StatIndex} from "../mock/dataSource";
 
 class Designer extends Component {
 
@@ -33,11 +35,12 @@ class Designer extends Component {
     }
     initSpread(){
         var spreadNS = window.GC.Spread.Sheets;
-        var spread = new spreadNS.Workbook(document.getElementById('ss'), {sheetCount: 1});
+        var spread = new spreadNS.Workbook(document.getElementById('ss'), {sheetCount: 3});
         var excelIO = new window.GC.Spread.Excel.IO();
         this.setState({
             excelIO:excelIO
         })
+        this.loadDataSource(spread)
         this.props.initSpread(spread)
 
         this.adjustSpreadSize(spread)
@@ -49,6 +52,33 @@ class Designer extends Component {
         this.syncSpreadPropertyValues(spread)
         this.syncSheetPropertyValues(spread)
 
+    }
+    loadDataSource(spread){
+        var spreadNS = window.GC.Spread.Sheets
+        spread.suspendPaint();
+        try {
+            var sheet = spread.getSheet(0)
+            sheet.name("统计模板")
+            sheet = spread.getSheet(1)
+            var table = sheet.tables.addFromDataSource("统计维度", 0, 0, this.props.statDimension.data)
+            sheet.name("统计维度")
+            sheet = spread.getSheet(2);
+            table = sheet.tables.addFromDataSource("统计指标", 0, 0, this.props.statIndex.data)
+            sheet.name("统计指标")
+            // table.filterButtonVisible(true)
+            // table.bindColumns(true)
+            // sheet2.bindColumns(this.props.dataSource.colInfos);
+            // table.setDataSource(this.props.dataSource.data);
+            // sheet2.name("数据源");
+            // sheet2.autoGenerateColumns = false;
+            // sheet2.bindColumns(this.props.dataSource.colInfos);
+            // // sheet2.tables.findByName("数据源").filterButtonVisible(true)
+            // // sheet2.getTable(0).filterButtonVisible(true)
+        } catch (e) {
+            alert(e.message);
+        }
+        spread.resumePaint();
+        // console.log('sheet2.tables',sheet2.tables)
     }
     syncSpreadPropertyValues(spread){
 
@@ -102,7 +132,67 @@ class Designer extends Component {
 
     }
     onCellSelected(){
+        window.$("#addslicer").addClass("hidden");
+        var sheet = this.props.spread.getActiveSheet(),
+            row = sheet.getActiveRowIndex(),
+            column = sheet.getActiveColumnIndex();
+        // if (showSparklineSetting(row, column)) {
+        //     setActiveTab("sparklineEx");
+        //     return;
+        // }
+        var cellInfo = getCellInfo(sheet, row, column),
+            cellType = cellInfo.type;
 
+        // syncCellRelatedItems();
+        // updatePositionBox(sheet);
+        // updateCellStyleState(sheet, row, column);
+
+        var tabType = TabType.CELL;
+
+        // clearCachedItems();
+
+        // add map from cell type to tab type here
+        // if (cellType === TabType.TABLE) {
+        //     tabType = TabType.TABLE;
+        //     // syncTablePropertyValues(sheet, cellInfo.object);
+        //     // window.$("#addslicer").removeClass("hidden");
+        // } else if (cellType === TabType.COMMENT) {
+        //     tabType = TabType.COMMENT;
+        //     // syncCommentPropertyValues(sheet, cellInfo.object);
+        // }
+        tabType = cellType
+
+        // this.props.activeTabAction(tabType);
+    }
+    // setActiveTab(tabName) {
+    //     // show / hide tabs
+    //     var $target = this.getTabItem(tabName),
+    //         $spreadTab = this.getTabItem("spread");
+    //
+    //     if (specialTabNames.indexOf(tabName) >= 0) {
+    //         if ($target.hasClass("hidden")) {
+    //             hideSpecialTabs(false);
+    //
+    //             $target.removeClass("hidden");
+    //             $spreadTab.addClass("hidden");
+    //             $("a", $target).tab("show");
+    //         }
+    //     } else {
+    //         if ($spreadTab.hasClass("hidden")) {
+    //             $spreadTab.removeClass("hidden");
+    //             hideSpecialTabs(true);
+    //         }
+    //         if (!$target.hasClass("active")) {
+    //             // do not switch from Data to Cell tab
+    //             if (!(tabName === "cell" && getTabItem("data").hasClass("active"))) {
+    //                 $("a", $target).tab("show");
+    //             }
+    //         }
+    //     }
+    // }
+
+    getTabItem(tabName) {
+        return window.$(".insp-container ul.nav-tabs a[href='#" + tabName + "TabContent']").parent();
     }
     onActiveSheetChanged(){
         this.props.activeSheetAction(this.props.spread.getActiveSheet())
@@ -154,7 +244,9 @@ class Designer extends Component {
 const mapStateToProps = state => {
     console.log('getList',state.update)
     return {
-        spread: state.spread.spread
+        spread: state.spread.spread,
+        statDimension:state.dataSource.statDimension,
+        statIndex: state.dataSource.statIndex
     }
 }
 
@@ -165,7 +257,10 @@ const mapDispatchToProps = dispatch => {
         },
         activeSheetAction: sheet => {
             dispatch(ActiveSheetAction(sheet))
-        }
+        },
+        activeTabAction: tabType => {
+            dispatch(ActiveTabAction(tabType))
+        },
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Designer)

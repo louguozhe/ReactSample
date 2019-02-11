@@ -1,9 +1,12 @@
-import {ActiveSheet, InitSpread} from './actions' // 引入action类型常量名
+import {ActiveSheet, InitSpread,TabType,ActiveTabType} from './actions' // 引入action类型常量名
 
 // 初始化state数据
 const initialState = {
     spread: null,
     activeSheet:null,
+    tableIndex:1,
+    activeTabType:TabType.SPREAD,
+    showTabTypes: [TabType.SPREAD,TabType.SHEET,TabType.CELL,TabType.TABLE],
     cell:null
 }
 
@@ -20,6 +23,10 @@ export default function (state = initialState, action) {
             console.log('ActiveSheetAction:',action.sheet)
             return Object.assign({}, state, {
                 activeSheet:action.sheet })
+        case ActiveTabType:
+            console.log('ActiveTabTypeAction:',action.tabType)
+            return Object.assign({}, state, {
+                activeTabType:action.tabType })
         default:
             return state
     }

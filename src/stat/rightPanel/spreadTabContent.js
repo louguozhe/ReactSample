@@ -4,7 +4,7 @@ import Group from "../group/group";
 import GroupWapper from "../group/groupWapper";
 import CheckOption from "../option/checkOptionComponent";
 import connect from "react-redux/es/connect/connect";
-
+import {TabType} from '../../store/reducers/spread/actions'
 class spreadTabContent extends Component {
 
     constructor(props) {
@@ -12,12 +12,10 @@ class spreadTabContent extends Component {
 
         this.onOptionChange = this.onOptionChange.bind(this)
         this.state = {
-            options:null
         }
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
-            options: nextProps.spread.options
         });
     }
 
@@ -30,11 +28,11 @@ class spreadTabContent extends Component {
 
     render(){
        return (
-           <TabContent data={{id:"spreadTab",active:true}}>
+           <TabContent data={{id:"spreadTab",active:this.props.activeTabType === TabType.SPREAD}}>
                <GroupWapper>
                    <Group data={{name:"通用",collapsed:false}}>
                        <CheckOption {...this.props}
-                                    data={{name:"允许拖拽",checked:this.state.options?this.state.options.allowUserDragDrop:false}}
+                                    data={{name:"允许拖拽",checked:this.props.spread?this.props.spread.options.allowUserDragDrop:false}}
                                     onOptionChange={e=>this.onOptionChange(e,"allowUserDragDrop")}
                        />
                    </Group>
@@ -42,11 +40,11 @@ class spreadTabContent extends Component {
                <GroupWapper>
                    <Group data={{name:"滚动条",collapsed:false}}>
                        <CheckOption {...this.props}
-                                    data={{name:"垂直滚动条",checked:this.state.options?this.state.options.showVerticalScrollbar:false}}
+                                    data={{name:"垂直滚动条",checked:this.props.spread?this.props.spread.showVerticalScrollbar:false}}
                                     onOptionChange={e=>this.onOptionChange(e,"showVerticalScrollbar")}
                        />
                        <CheckOption {...this.props}
-                                    data={{name:"水平滚动条",checked:this.state.options?this.state.options.showHorizontalScrollbar:false}}
+                                    data={{name:"水平滚动条",checked:this.props.spread?this.props.spread.showHorizontalScrollbar:false}}
                                     onOptionChange={e=>this.onOptionChange(e,"showHorizontalScrollbar")}
                        />
                    </Group>
@@ -58,7 +56,8 @@ class spreadTabContent extends Component {
 
 const getStoreProps = state => {
     return {
-        spread: state.spread.spread
+        spread: state.spread.spread,
+        activeTabType: state.spread.activeTabType
     }
 }
 

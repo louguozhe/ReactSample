@@ -10,7 +10,7 @@ export default class extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("numberOption componentWillReceiveProps:",nextProps)
+        // console.log("numberOption componentWillReceiveProps:",nextProps)
         this.setState({
             value:nextProps.data.value
         })

@@ -10,7 +10,7 @@ export default class extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("textOption componentWillReceiveProps:",nextProps)
+        // console.log("textOption componentWillReceiveProps:",nextProps)
         this.setState({
             value:nextProps.data.value
         })
