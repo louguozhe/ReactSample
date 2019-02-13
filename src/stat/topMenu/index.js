@@ -1,12 +1,12 @@
 import React,{Component} from "react";
 import connect from "react-redux/es/connect/connect";
+import {exportToExcel,exportToJSON} from '../../utils/spreadHelper'
 
 class topMenu extends Component {
 
+
     constructor(props) {
         super(props);
-        this.processFileSelected = this.processFileSelected.bind(this)
-        this.attachToolbarItemEvents= this.attachToolbarItemEvents.bind(this)
 
         this.state = {
             tableIndex:1
@@ -14,123 +14,9 @@ class topMenu extends Component {
     }
     componentDidMount(){
         window.$("#fileSelector").change(this.processFileSelected)
-        this.attachToolbarItemEvents()
+        window.$("div.insp-menu .menu-item").click(this.itemSelected);
+        window.$("div.insp-dropdown-list .dropdown").click(this.showDropdown)
     }
-    attachToolbarItemEvents() {
-        var self = this
-        var spreadNS = window.GC.Spread.Sheets
-        window.$("#addtable").click(function () {
-            var sheet = self.props.spread.getActiveSheet(),
-                row = sheet.getActiveRowIndex(),
-                column = sheet.getActiveColumnIndex(),
-                name = "Table" + self.props.tableIndex,
-                rowCount = 1,
-                colCount = 1;
-
-            // tableIndex++;
-
-            var selections = sheet.getSelections();
-
-            if (selections.length > 0) {
-                var range = selections[0],
-                    r = range.row,
-                    c = range.col;
-
-                rowCount = range.rowCount,
-                    colCount = range.colCount;
-
-                // update row / column for whole column / row was selected
-                if (r >= 0) {
-                    row = r;
-                }
-                if (c >= 0) {
-                    column = c;
-                }
-            }
-
-            sheet.suspendPaint();
-            try {
-                // handle exception if the specified range intersect with other table etc.
-                sheet.tables.add(name, row, column, rowCount, colCount, spreadNS.Tables.TableThemes.light2);
-            } catch (e) {
-                alert(e.message);
-            }
-            sheet.resumePaint();
-
-            self.props.spread.focus();
-
-            // onCellSelected();
-        });
-
-        window.$("#addcomment").click(function () {
-            var sheet = self.props.spread.spread.getActiveSheet(),
-                row = sheet.getActiveRowIndex(),
-                column = sheet.getActiveColumnIndex(),
-                comment;
-
-            sheet.suspendPaint();
-            comment = sheet.comments.add(row, column, new Date().toLocaleString());
-            sheet.resumePaint();
-
-            comment.commentState(spreadNS.Comments.CommentState.edit);
-        });
-
-        window.$("#addpicture, #doImport").click(function () {
-            window.$("#fileSelector").data("action", this.id);
-            window.$("#fileSelector").click();
-        });
-
-        // window.$("#toggleInspector").click(this.toggleInspector);
-
-        window.$("#doClear").click(function () {
-            var $dropdown = window.$("#clearActionList"),
-                $this = window.$(this),
-                offset = $this.offset();
-
-            $dropdown.css({left: offset.left, top: offset.top + $this.outerHeight()});
-            $dropdown.show();
-            // processEventListenerHandleClosePopup(true);
-        });
-
-        window.$("#doExport").click(function () {
-            var $dropdown = window.$("#exportActionList"),
-                $this = window.$(this),
-                offset = $this.offset();
-
-            $dropdown.css({left: offset.left, top: offset.top + $this.outerHeight()});
-            $dropdown.show();
-            // processEventListenerHandleClosePopup(true);
-        });
-
-        // window.$("#addslicer").click(this.processAddSlicer);
-    }
-
-
-    doImportFile() {
-        window.$("#fileSelector").click()
-    }
-    processFileSelected(){
-        // var file = window.$("#fileSelector").files[0]
-        // console.log('file open:',file)
-        // if (!file) return false;
-        // var fileName = file.name;
-        // var index = fileName.lastIndexOf('.');
-        // var fileExt = fileName.substr(index + 1).toLowerCase();
-        // if (fileExt === 'json' || fileExt === 'ssjson') {
-        //     this.importSpreadFromJSON(file);
-        // } else if (fileExt === 'xlsx') {
-        //     this.importSpreadFromExcel(file);
-        // } else {
-        //     // alert(getResource("messages.invalidImportFile"));
-        // }
-    }
-    setZoomFactor(){
-
-    }
-    setDropDownText(){
-
-    }
-
 
     render(){
        return (

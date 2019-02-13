@@ -20,6 +20,53 @@ export const StatDimension = {
     ]
 }
 
+export const StatDimensionTree =
+    [
+        {
+            "code": "jbqk",
+            "name": "基本情况",
+            children: [
+                {
+                    "code": "jbqk.whcd",
+                    "name": "文化程度",
+                    "value": "jbqk.whcd",
+                    children: [
+                        {
+                            "code": "jbqk.whcd.bs",
+                            "name": "博士"
+                        },{
+                            "code": "jbqk.whcd.ss",
+                            "name": "硕士"
+                        },{
+                            "code": "jbqk.whcd.bk",
+                            "name": "本科"
+                        },{
+                            "code": "jbqk.whcd.dzyx",
+                            "name": "大专以下"
+                        }
+                    ]
+                },{
+                    "code": "jbqk.zwdj",
+                    "name": "职务等级",
+                    children: [
+                        {
+                            "code": "jbqk.zwdj.jzys",
+                            "name": "军职以上"
+                        },{
+                            "code": "jbqk.zwdj.ss",
+                            "name": "师职"
+                        },{
+                            "code": "jbqk.zwdj.tz",
+                            "name": "团职"
+                        },{
+                            "code": "jbqk.zwdj.yzyx",
+                            "name": "营职以下"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 //统计指标定义
 export const StatIndex = {
     data:[
