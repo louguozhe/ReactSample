@@ -16,10 +16,10 @@ export default class extends Component {
                 <div className="insp-row">
                     <div>
                         <div className="insp-checkbox insp-inline-row"
-                             data-name={this.props.data.name} >
-                            <div className={"button insp-inline-row-item checked"}></div>
+                             data-name="showVerticalScrollbar"  onClick={this.props.onOptionChange}>
+                            <div className={["button","insp-inline-row-item",this.props.data.checked?"checked":null].join(' ')}></div>
                             <div className="text   insp-inline-row-item localize">
-                                {this.props.data.caption}
+                                {this.props.data.name}
                             </div>
                         </div>
                     </div>

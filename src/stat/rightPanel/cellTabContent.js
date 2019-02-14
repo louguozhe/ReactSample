@@ -4,9 +4,12 @@ import Group from "../group/group";
 import GroupWapper from "../group/groupWapper";
 import TextOption from "../option/textOptionComponent"
 import CheckOption from "../option/checkOptionComponent";
-import NumberOption from "../option/numberOptionComponent";
+import FormatOption from "../option/formatOptionComponent";
 import ColorOption from "../option/colorOptionComponent";
+import AlignOption from "../option/alignOptionComponent";
 import ButtonOption from "../option/buttonOptionComponent";
+import DropdownListOption from "../option/dropdownListOptionComponent";
+import BorderOption from "../option/borderOptionComponent";
 import connect from "react-redux/es/connect/connect";
 import {TabType} from "../../store/reducers/spread/actions";
 
@@ -111,8 +114,28 @@ class sheetTabContent extends Component {
        return (
            <TabContent data={{id:"cellTab",active: this.props.activeTabType === TabType.CELL}} >
                <GroupWapper>
-                   <Group data={{name:"通用",collapsed:false}}>
-                       <TextOption {...this.props} data={{name:"值",value:"cellName"}}/>
+                   <Group data={{name:"风格",collapsed:false}}>
+                       <DropdownListOption data={{name:"fontFamily",caption:"字体"}}></DropdownListOption>
+                       <DropdownListOption data={{name:"fontSize",caption:"字号"}}></DropdownListOption>
+                       <ColorOption data={{name:"foreColor",caption:"前景色",cols:[4,8]}}></ColorOption>
+                       <ColorOption data={{name:"backColor",caption:"背景色",cols:[4,8]}}></ColorOption>
+                   </Group>
+                   <Group data={{name:"边框",collapsed:false}}>
+                       <BorderOption data={{name:"边框样式",value:"213"}}>
+                       </BorderOption>
+                   </Group>
+                   <Group data={{name:"对齐",collapsed:false}}>
+                       <AlignOption></AlignOption>
+                       <CheckOption data={{name:"wrapText",caption:"自动换行"}}></CheckOption>
+                   </Group>
+                   <Group data={{name:"格式",collapsed:false}}>
+                       {/*<DropdownListOption data={{name:"commomFormat",id:"commomFormatType",caption:"通用格式"}}></DropdownListOption>*/}
+                       <FormatOption></FormatOption>
+                   </Group>
+                   <Group data={{name:"合并",collapsed:false}}>
+                       <ButtonOption data={[{name:"合并",value:"mergeCells"},{name:"取消合并",value:"unmergeCells"}]}
+                                     onButtonClick={e => {this.onButtonClick(e,this)}}
+                       />
                    </Group>
                </GroupWapper>
            </TabContent>

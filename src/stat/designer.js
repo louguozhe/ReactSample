@@ -39,6 +39,9 @@ class Designer extends Component {
         try {
             var sheet = spread.getSheet(0)
             sheet.name("统计模板")
+            sheet.setRowCount(3, window.GC.Spread.Sheets.SheetArea.colHeader);
+            sheet.setColumnCount(3, window.GC.Spread.Sheets.SheetArea.rowHeader);
+            sheet.setValue(0, 0, "Combined Columns", window.GC.Spread.Sheets.SheetArea.colHeader);
             sheet = spread.getSheet(1)
             sheet.name("统计维度")
             var table = sheet.tables.addFromDataSource("统计维度", 0, 0, this.props.statDimension.data)

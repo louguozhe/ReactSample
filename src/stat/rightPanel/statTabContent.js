@@ -6,7 +6,6 @@ import TextOption from "../option/textOptionComponent"
 import CheckOption from "../option/checkOptionComponent";
 import NumberOption from "../option/numberOptionComponent";
 import ColorOption from "../option/colorOptionComponent";
-import DropdownListOption from "../option/dropdownListOptionComponent";
 import ButtonOption from "../option/buttonOptionComponent";
 import connect from "react-redux/es/connect/connect";
 import {TabType} from "../../store/reducers/spread/actions";
@@ -281,19 +280,15 @@ class statTabContent extends Component {
                        {/*<TextOption {...this.props} data={{name:"名称",value:this.props.activeSheet?this.props.activeSheet.name():""}}*/}
                                    {/*onTextChange={e => {this.onTextChange(e,'sheetName')}}*/}
                        {/*/>*/}
-                       <NumberOption data={{name:"行数",value:this.props.activeSheet?this.props.activeSheet.getRowCount():0}}
-                                   onNumberChange={e => {this.onNumberChange(e,'rowCount')}}
+                       <NumberOption data={{name:"rowCount",caption:"行数",value:this.props.activeSheet?this.props.activeSheet.getRowCount():0}}
                        />
-                       <NumberOption data={{name:"列数",value:this.props.activeSheet?this.props.activeSheet.getColumnCount():0}}
-                                     onNumberChange={e => {this.onNumberChange(e,'columnCount')}}
+                       <NumberOption data={{name:"columnCount",caption:"列数",value:this.props.activeSheet?this.props.activeSheet.getColumnCount():0}}
                        />
-                       <CheckOption data={{name:"垂直线",checked:this.props.activeSheet?this.props.activeSheet.options.gridline.showVerticalGridline:false}}
-                                    onOptionChange={e=>this.onOptionChange(e,"showVerticalGridline")}
+                       <CheckOption data={{name:"showVerticalGridline",caption:"垂直线",checked:this.props.activeSheet?this.props.activeSheet.options.gridline.showVerticalGridline:false}}
                        />
-                       <CheckOption data={{name:"水平线",checked:this.props.activeSheet?this.props.activeSheet.options.gridline.showHorizontalGridline:false}}
-                                    onOptionChange={e=>this.onOptionChange(e,"showHorizontalGridline")}
+                       <CheckOption data={{name:"showHorizontalGridline",caption:"水平线",checked:this.props.activeSheet?this.props.activeSheet.options.gridline.showHorizontalGridline:false}}
                        />
-                       <ColorOption data={{name:"背景色"}}
+                       <ColorOption data={{name:"sheetTabColor",caption:"统计表名称背景色"}}
                            onColorChange={e => {this.onColorChange(e,'sheetTabColor')}}
                        />
                    </Group>

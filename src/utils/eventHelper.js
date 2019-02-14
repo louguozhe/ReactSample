@@ -2216,17 +2216,16 @@ function doPrepareWork() {
 
     function addEventHandlers() {
         $("div.insp-group-title>span").click(toggleState);
-        //louis
-        // $("div.insp-checkbox").click(checkedChanged);
+        $("div.insp-checkbox").click(checkedChanged);
         $("div.insp-number>input.editor").blur(updateNumberProperty);
         $("div.insp-dropdown-list .dropdown").click(showDropdown);
         $("div.insp-menu .menu-item").click(itemSelected);
         $("div.insp-color-picker .picker").click(showColorPicker);
         $("li.color-cell").click(colorSelected);
-        // $(".insp-button-group span.btn").click(buttonClicked);
-        // $(".insp-radio-button-group span.btn").click(buttonClicked);
-        // $(".insp-buttons .btn").click(divButtonClicked);
-        // $(".insp-text input.editor").blur(updateStringProperty);
+        $(".insp-button-group span.btn").click(buttonClicked);
+        $(".insp-radio-button-group span.btn").click(buttonClicked);
+        $(".insp-buttons .btn").click(divButtonClicked);
+        $(".insp-text input.editor").blur(updateStringProperty);
     }
 
     processDisplayGroups();
@@ -3449,6 +3448,7 @@ function attachSpreadEvents(rebind) {
         if (sheet.options.allowCellOverflow !== value) {
             sheet.options.allowCellOverflow = value;
         }
+        g_dispatch(ActiveSheetAction(sheet))
     });
 
     spread.bind(spreadNS.Events.SelectionChanging, function () {

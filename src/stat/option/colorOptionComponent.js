@@ -22,15 +22,20 @@ export default class extends Component {
     }
 
     render(){
+        var lColSize = "insp-col-6",rColSize = lColSize
+        if (this.props.data.cols && this.props.data.cols.length>=2){
+            lColSize = "insp-col-" + this.props.data.cols[0].toString()
+            rColSize = "insp-col-" + this.props.data.cols[1].toString()
+        }
         return (
             <div>
                 <div className="insp-row">
                     <div>
-                        <div className="insp-color-picker insp-inline-row"  data-name="sheetTabColor">
-                            <div className="title  insp-inline-row-item insp-col-6 localize">
-                                {this.props.data.name}
+                        <div className="insp-color-picker insp-inline-row"  data-name={this.props.data.name}>
+                            <div className={"title  insp-inline-row-item localize " + lColSize}>
+                                {this.props.data.caption}
                             </div>
-                            <div className="picker insp-inline-row-item insp-col-6">
+                            <div className={"picker insp-inline-row-item " + rColSize}>
                                 <div style={{width: "100%", height: "100%"}}>
                                     <div className="color-view "
                                          style={{backgroundColor: this.state.value}}></div>
