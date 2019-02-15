@@ -2,21 +2,6 @@ import React,{Component} from "react";
 
 export default class extends Component {
 
-    constructor(props) {
-        super(props)
-
-    }
-
-    componentWillReceiveProps(nextProps) {
-        // console.log("textOption componentWillReceiveProps:",nextProps)
-
-    }
-    onChange(sender){
-        this.setState({
-            value:sender.target.value
-        })
-    }
-
     render(){
         return (
             <div>

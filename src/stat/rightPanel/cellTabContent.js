@@ -2,7 +2,6 @@ import React,{Component} from "react";
 import TabContent from "../tab/tabContent";
 import Group from "../group/group";
 import GroupWapper from "../group/groupWapper";
-import TextOption from "../option/textOptionComponent"
 import CheckOption from "../option/checkOptionComponent";
 import FormatOption from "../option/formatOptionComponent";
 import ColorOption from "../option/colorOptionComponent";

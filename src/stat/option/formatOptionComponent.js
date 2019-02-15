@@ -4,11 +4,6 @@ import TextOption from "./textOptionComponent";
 
 export default class extends Component {
 
-    constructor(props) {
-        super(props)
-
-    }
-
     render(){
         return (
             <React.Fragment>

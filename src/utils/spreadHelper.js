@@ -101,3 +101,101 @@ export const fullNameCellType = new FullNameCellType()
 export const statTableStyle = new GC.Spread.Sheets.Tables.TableTheme();
 const thinBorder = new GC.Spread.Sheets.LineBorder("black", GC.Spread.Sheets.LineStyle.thin);
 statTableStyle.wholeTableStyle(new GC.Spread.Sheets.Tables.TableStyle("aliceblue", "green", "bold 10pt arial", thinBorder, thinBorder, thinBorder, thinBorder, thinBorder, thinBorder));
+
+
+function demo_Undo_initSpread(spread) {
+    var sheet = spread.getActiveSheet();
+    var command = {
+        canUndo: true,
+        execute: function(spread, options, isUndo) {
+            var Commands = GC.Spread.Sheets.Commands;
+            if (isUndo) {
+                Commands.undoTransaction(spread, options);
+                return true;
+            } else {
+                Commands.startTransaction(spread, options);
+                spread.suspendPaint();
+                var selections = options.selections;
+                var value = options.backColor;
+                selections.forEach(function(sel) {
+                    sheet.getRange(sel.row, sel.col, sel.rowCount, sel.colCount).backColor(value);
+                });
+                spread.resumePaint();
+                Commands.endTransaction(spread, options);
+                return true;
+            }
+        }
+    };
+    var selections = sheet.getSelections();
+    var commandManager = spread.commandManager();
+    commandManager.register('changeBackColor', command);
+    commandManager.execute({
+        cmd: 'changeBackColor',
+        sheetName: spread.getSheet(0).name(),
+        selections: selections,
+        backColor: 'red'
+    });
+}
+
+
+// Define highlight cell types
+function HighlightColumnItemsCellType() {
+    this.RADIUS = 10;
+    this.HIGHLIGHT_COLOR = "rgb(40, 171, 240)";
+    this.NORMAL_COLOR = "rgb(128, 255, 255)";
+    this.HIGHLIGHT_TIP = "Remove highlight.";
+    this.NORMAL_TIP = "Highlight negative numbers.";
+
+    spreadNS.CellTypes.ColumnHeader.apply(this);
+}
+
+HighlightColumnItemsCellType.prototype = new spreadNS.CellTypes.ColumnHeader();
+HighlightColumnItemsCellType.prototype.paint = function (ctx, value, x, y, width, height, style, context) {
+    spreadNS.CellTypes.ColumnHeader.prototype.paint.apply(this, arguments);
+
+    var tag = context.sheet.getTag(context.row, context.col, context.sheetArea);
+    var RADIUS = this.RADIUS;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x + width - RADIUS, y + height / 2, RADIUS / 2, 0, Math.PI * 2);
+    ctx.fillStyle = (tag && tag.color) || this.NORMAL_COLOR;
+    ctx.fill();
+    ctx.restore();
+};
+export const highlightColumnItemsCellType = new HighlightColumnItemsCellType()
+
+function HighlightRowItemsCellType() {
+    this.RADIUS = 10;
+    this.HIGHLIGHT_COLOR = "rgb(40, 171, 240)";
+    this.NORMAL_COLOR = "rgb(128, 255, 255)";
+    this.HIGHLIGHT_TIP = "Remove highlight.";
+    this.NORMAL_TIP = "Highlight negative numbers.";
+
+    spreadNS.CellTypes.RowHeader.apply(this);
+}
+HighlightRowItemsCellType.prototype = new spreadNS.CellTypes.RowHeader();
+HighlightRowItemsCellType.prototype.paint = function (ctx, value, x, y, width, height, style, context) {
+    spreadNS.CellTypes.RowHeader.prototype.paint.apply(this, arguments);
+
+    var tag = context.sheet.getTag(context.row, context.col, context.sheetArea);
+    var RADIUS = this.RADIUS;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x + width - RADIUS, y + height / 2, RADIUS / 2, 0, Math.PI * 2);
+    ctx.fillStyle = (tag && tag.color) || this.NORMAL_COLOR;
+    ctx.fill();
+    ctx.restore();
+};
+export const highlightRowItemsCellType = new HighlightRowItemsCellType()
+
+export function InitStatSheet(sheet){
+    if(!sheet)
+        return
+    sheet.setRowCount(20);
+    sheet.setColumnCount(20);
+    sheet.setCellType(0, 0, highlightColumnItemsCellType, spreadNS.SheetArea.colHeader);
+    sheet.setCellType(0, 0, highlightRowItemsCellType, spreadNS.SheetArea.rowHeader);
+    // sheet.setStyle(1,1,style,GC.Spread.Sheets.SheetArea.colHeader)
+    // sheet.getColumn.backColor("#1E90FF")
+    // sheet.getColumn(1).backColor("#1E90FF")
+}

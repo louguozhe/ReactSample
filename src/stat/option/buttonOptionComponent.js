@@ -1,6 +1,4 @@
 import React,{Component} from "react";
-import { connect } from 'react-redux' // 引入connect
-import {increase} from '../../store/action'
 
 class buttonOptionComponent extends Component {
 
@@ -18,7 +16,7 @@ class buttonOptionComponent extends Component {
 
     getButtonDiv(item){
         return (
-            <div className="item">
+            <div className="item" key={item.value}>
                 <div className="button btn btn-default localize"
                      id={item.value}
                      onClick={this.props.onButtonClick}>

@@ -1,4 +1,4 @@
-import {ActiveSheet, InitSpread,TabType,ActiveTabType,SetStoreParamer} from './actions' // 引入action类型常量名
+import {ActiveSheet, InitSpread,TabType,ActiveTabType} from './actions' // 引入action类型常量名
 
 // 初始化state数据
 const initialState = {
@@ -15,23 +15,18 @@ export default function (state = initialState, action) {
 
     switch(action.type) {
         case InitSpread:
-            console.log('InitSpread:',action.spread)
+            // console.log('InitSpread:',action.spread)
             return Object.assign({}, state, {
                 spread: action.spread,
                 activeSheet:action.spread.getActiveSheet() })
         case ActiveSheet:
-            console.log('ActiveSheetAction:',action.sheet)
+            // console.log('ActiveSheetAction:',action.sheet)
             return Object.assign({}, state, {
                 activeSheet:action.sheet })
         case ActiveTabType:
-            console.log('ActiveTabTypeAction:',action.tabType)
+            // console.log('ActiveTabTypeAction:',action.tabType)
             return Object.assign({}, state, {
                 activeTabType:action.tabType })
-        case SetStoreParamer:
-            console.log('SetStoreParamer:',action.paraName,action.value)
-            var paraName =  action.paraName
-            return Object.assign({}, state, {
-                paraName:action.value })
         default:
             return state
     }

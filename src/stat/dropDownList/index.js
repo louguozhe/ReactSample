@@ -2,10 +2,6 @@ import React,{Component} from "react";
 
 export default class extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     getDropItem(list){
         if (list.cName && list.value !== "none"){
             return (
@@ -33,7 +29,7 @@ export default class extends Component {
         return (
             <div className="insp-menu" role="menu" id={id}>
                 {lists.map(list=>{return (
-                    <div className="menu-item">
+                    <div className="menu-item" key={list.name}>
                         <div className={"image"}></div>
                         {this.getDropItem(list)}
                         <div className={"shortcut"}></div>
@@ -50,21 +46,20 @@ export default class extends Component {
             <div>
                 {this.getDropDownList("statDataSetList",[{name:"无",value:""},{name:"基本情况",value:"jbqk"},{name:"岗位情况",value:"gwqk"}])}
                 {this.getDropDownList("statDimensionList",[{name:"无",value:""},{name:"文化程度",value:"whcd"},{name:"军衔",value:"jx"},{name:"职务等级",value:"zwdj"}])}
-                {this.getDropDownList("borderLineList",[
-                    {name:"None",cName:"no-border",value:"none"},
+                {this.getDropDownList("borderLineList",[{name:"None",cName:"no-border",value:"none"},
                     {name:"hair",cName:"line-style-hair",value:"hair"},
                     {name:"dotted",cName:"line-style-dotted",value:"dotted"},
                     ,{name:"dash-dot-dot",cName:"line-style-dash-dot-dot",value:"dash-dot-dot"}
-                    ,{name:"dash-dot-dot",cName:"line-style-dash-dot",value:"dash-dot"}
-                    ,{name:"dash-dot-dot",cName:"line-style-dashed",value:"dashed"}
-                    ,{name:"dash-dot-dot",cName:"line-style-thin",value:"thin"}
-                    ,{name:"dash-dot-dot",cName:"line-style-medium-dash-dot-dot",value:"medium-dash-dot-dot"}
-                    ,{name:"dash-dot-dot",cName:"line-style-slanted-dash-dot",value:"slanted-dash-dot"}
-                    ,{name:"dash-dot-dot",cName:"line-style-medium-dash-dot",value:"medium-dash-dot"}
-                    ,{name:"dash-dot-dot",cName:"line-style-medium-dashed",value:"medium-dashed"}
-                    ,{name:"dash-dot-dot",cName:"line-style-medium",value:"medium"}
-                    ,{name:"dash-dot-dot",cName:"line-style-thick",value:"thick"}
-                    ,{name:"dash-dot-dot",cName:"line-style-double",value:"double"}
+                    ,{name:"dash-dot",cName:"line-style-dash-dot",value:"dash-dot"}
+                    ,{name:"dashed",cName:"line-style-dashed",value:"dashed"}
+                    ,{name:"thin",cName:"line-style-thin",value:"thin"}
+                    ,{name:"medium-dash-dot-dot",cName:"line-style-medium-dash-dot-dot",value:"medium-dash-dot-dot"}
+                    ,{name:"slanted-dash-dot",cName:"line-style-slanted-dash-dot",value:"slanted-dash-dot"}
+                    ,{name:"medium-dash-dot",cName:"line-style-medium-dash-dot",value:"medium-dash-dot"}
+                    ,{name:"medium-dashed",cName:"line-style-medium-dashed",value:"medium-dashed"}
+                    ,{name:"medium",cName:"line-style-medium",value:"medium"}
+                    ,{name:"thick",cName:"line-style-thick",value:"thick"}
+                    ,{name:"double",cName:"line-style-double",value:"double"}
                     ])}
                 {this.getDropDownList("fontFamilyList",[
                     {name:"Arial"}

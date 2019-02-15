@@ -1,13 +1,8 @@
 import React,{Component} from "react";
 import DropdownListOption from "./dropdownListOptionComponent";
 import ColorOption from "./colorOptionComponent";
-import Group from "../group/group";
 
 export default class extends Component {
-
-    constructor(props) {
-        super(props)
-    }
 
 
     render(){

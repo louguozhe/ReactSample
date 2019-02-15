@@ -3,7 +3,6 @@ import { createStore } from 'redux' // 引入redux createStore、中间件及com
 import { Provider } from 'react-redux'
 import reducer from '../store/reducers'  // 引入reducers集合
 import Designer from './designer'
-import TabContent from "./tab/tabContent";
 
 const store = createStore(reducer)
 

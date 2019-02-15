@@ -1,5 +1,5 @@
 import {uiResource} from './resources'
-import {InitSpreadAction, ActiveSheetAction, ActiveTabAction, TabType,SetStoreParamerAction} from '../store/reducers/spread/actions'
+import {InitSpreadAction, ActiveSheetAction} from '../store/reducers/spread/actions'
 
 var $ = window.$
 var GC = window.GC
@@ -59,7 +59,8 @@ function toggleState() {
 function updateMergeButtonsState() {
     var sheet = spread.getActiveSheet();
     var sels = sheet.getSelections();
-    mergable = false, unmergable = false;
+    mergable = false
+    unmergable = false;
     sels.forEach(function (range) {
         var ranges = sheet.getSpans(range),
             spanCount = ranges.length;
@@ -70,7 +71,7 @@ function updateMergeButtonsState() {
             } else if (spanCount === 1) {
                 var range2 = ranges[0];
                 if (range2.row !== range.row || range2.col !== range.col ||
-                    range2.rowCount !== range2.rowCount || range2.colCount !== range.colCount) {
+                    range2.rowCount !== range.rowCount || range2.colCount !== range.colCount) {
                     mergable = true;
                 }
             }
@@ -299,6 +300,8 @@ function processRadioButtonClicked(key, $item, $group) {
                     picture.dynamicSize(false);
                 }
                 break;
+            default:
+                break
         }
     }
 }
@@ -336,6 +339,8 @@ function checkedChanged() {
         case "pictureMoveAndSize":
             processRadioButtonClicked(name, $(window.event.target), $element);
             return;
+        default:
+            break
     }
 
 
@@ -348,7 +353,9 @@ function checkedChanged() {
 
     spread.suspendPaint();
 
-    var options = spread.options;
+    let options = spread.options;
+
+    let isShow
 
     switch (name) {
 
@@ -597,15 +604,15 @@ function checkedChanged() {
         /* slicer related items (end) */
 
         case "showDataLabelsValue":
-            var isShow = judjeDataLabelsIsShow({item:"showDataLabelsValue",isShow:value});
+            isShow = judjeDataLabelsIsShow({item:"showDataLabelsValue",isShow:value});
             updateDataLabelsPositionDropDown(isShow);
             break;
         case "showDataLabelsSeriesName":
-            var isShow = judjeDataLabelsIsShow({item:"showDataLabelsSeriesName",isShow:value});
+            isShow = judjeDataLabelsIsShow({item:"showDataLabelsSeriesName",isShow:value});
             updateDataLabelsPositionDropDown(isShow);
             break;
         case "showDataLabelsCategoryName":
-            var isShow = judjeDataLabelsIsShow({item:"showDataLabelsCategoryName",isShow:value});
+            isShow = judjeDataLabelsIsShow({item:"showDataLabelsCategoryName",isShow:value});
             updateDataLabelsPositionDropDown(isShow);
             break;
 
@@ -1017,8 +1024,9 @@ function showDropdown() {
         });
 
         // select corresponding item
+        var text
         if (name === "borderLine") {
-            var text = $("#border-line-type").attr("class");
+            text = $("#border-line-type").attr("class");
             $("div.image", $target).removeClass("fa-check");
             $("div.text", $target).filter(function () {
                 return $(this).find("div").attr("class") === text;
@@ -1026,7 +1034,7 @@ function showDropdown() {
             $("div.image.nocheck", $target).removeClass("fa-check");
         }
         else {
-            var text = $("span.display", $dropdown).text();
+            text = $("span.display", $dropdown).text();
             $("div.image", $target).removeClass("fa-check");
             $("div.text", $target).filter(function () {
                 return $(this).text() === text;
@@ -1375,7 +1383,6 @@ function itemSelected() {
             break;
         default:
             console.log("TODO add itemSelected for ", name, value);
-            g_dispatch(SetStoreParamerAction(name,dataValue))
             break;
     }
 
@@ -1584,6 +1591,8 @@ function buttonClicked() {
             case "hAlign":
                 setAlignment(sheet, name, $element.data("name"));
                 break;
+            default:
+                break
         }
     } else if ($element.parents(".insp-button-group").length > 0) {
         if (!$element.hasClass("no-toggle")) {
@@ -1678,23 +1687,23 @@ function increaseDecimal() {
             var zeroPointZero = "0" + decimalPoint + "0";
 
             var scientificNotationCheckingFormatter = getScientificNotationCheckingFormattter(activeCellFormatter);
-            if (!activeCellFormatter || ((activeCellFormatter == "General" || (scientificNotationCheckingFormatter &&
+            if (!activeCellFormatter || ((activeCellFormatter === "General" || (scientificNotationCheckingFormatter &&
                 (scientificNotationCheckingFormatter.indexOf("E") >= 0 || scientificNotationCheckingFormatter.indexOf('e') >= 0))))) {
                 if (!isNaN(activeCellValue)) {
                     var result = activeCellText.split('.');
-                    if (result.length == 1) {
+                    if (result.length === 1) {
                         if (result[0].indexOf('E') >= 0 || result[0].indexOf('e') >= 0)
                             formatString = zeroPointZero + "E+00";
                         else
                             formatString = zeroPointZero;
                     }
-                    else if (result.length == 2) {
+                    else if (result.length === 2) {
                         result[0] = "0";
                         var isScience = false;
                         var sb = "";
                         for (var i = 0; i < result[1].length + 1; i++) {
                             sb = sb + '0';
-                            if (i < result[1].length && (result[1].charAt(i) == 'e' || result[1].charAt(i) == 'E')) {
+                            if (i < result[1].length && (result[1].charAt(i) === 'e' || result[1].charAt(i) === 'E')) {
                                 isScience = true;
                                 break;
                             }
@@ -1712,10 +1721,10 @@ function increaseDecimal() {
                 formatString = activeCellFormatter;
                 if (formatString) {
                     var formatters = formatString.split(';');
-                    for (var i = 0; i < formatters.length && i < 2; i++) {
+                    for (i = 0; i < formatters.length && i < 2; i++) {
                         if (formatters[i] && formatters[i].indexOf("/") < 0 && formatters[i].indexOf(":") < 0 && formatters[i].indexOf("?") < 0) {
                             var indexOfDecimalPoint = formatters[i].lastIndexOf(decimalPoint);
-                            if (indexOfDecimalPoint != -1) {
+                            if (indexOfDecimalPoint !== -1) {
                                 formatters[i] = formatters[i].slice(0, indexOfDecimalPoint + 1) + zero + formatters[i].slice(indexOfDecimalPoint + 1);
                             }
                             else {
@@ -1747,7 +1756,7 @@ function getScientificNotationCheckingFormattter(formatter) {
     for (i = 0; i < signalQuoteSubStrings.length; i++) {
         formatter = formatter.replace(signalQuoteSubStrings[i], '');
     }
-    var doubleQuoteSubStrings = getSubStrings(formatter, '\"', '\"');
+    var doubleQuoteSubStrings = getSubStrings(formatter, '"', '"');
     for (i = 0; i < doubleQuoteSubStrings.length; i++) {
         formatter = formatter.replace(doubleQuoteSubStrings[i], '');
     }
@@ -1797,15 +1806,15 @@ function decreaseDecimal() {
         var decimalPoint = ".";
         if (activeCellValue) {
             var formatString = null;
-            if (!activeCellFormatter || activeCellFormatter == "General") {
+            if (!activeCellFormatter || activeCellFormatter === "General") {
                 if (!isNaN(activeCellValue)) {
                     var result = activeCellText.split('.');
-                    if (result.length == 2) {
+                    if (result.length === 2) {
                         result[0] = "0";
                         var isScience = false;
                         var sb = "";
                         for (var i = 0; i < result[1].length - 1; i++) {
-                            if ((i + 1 < result[1].length) && (result[1].charAt(i + 1) == 'e' || result[1].charAt(i + 1) == 'E')) {
+                            if ((i + 1 < result[1].length) && (result[1].charAt(i + 1) === 'e' || result[1].charAt(i + 1) === 'E')) {
                                 isScience = true;
                                 break;
                             }
@@ -6407,6 +6416,120 @@ function getHitTest(pageX, pageY, sheet) {
     return sheet.hitTest(x, y);
 }
 
+function getThemeColor() {
+    var sheet = spread.getActiveSheet();
+    setThemeColorToSheet(sheet);                                            // Set current theme color to sheet
+
+    var $colorUl = $("#default-theme-color");
+    var $themeColorLi, cellBackColor;
+    for (var col = 3; col < 13; col++) {
+        var row = 4;
+        cellBackColor = sheet.getActualStyle(row, col).backColor;
+        $themeColorLi = $("<li class=\"color-cell seed-color-column\"></li>");
+        $themeColorLi.css("background-color", cellBackColor).attr("data-name", sheet.getCell(2, col).text()).appendTo($colorUl);
+        for (row = 5; row < 10; row++) {
+            cellBackColor = sheet.getActualStyle(row, col).backColor;
+            $themeColorLi = $("<li class=\"color-cell\"></li>");
+            $themeColorLi.css("background-color", cellBackColor).attr("data-name", getColorName(sheet, row, col)).appendTo($colorUl);
+        }
+    }
+
+    sheet.clear(2, 1, 8, 12, spreadNS.SheetArea.viewport, 255);      // Clear sheet theme color
+}
+function setThemeColorToSheet(sheet) {
+    sheet.suspendPaint();
+
+    sheet.getCell(2, 3).text("Background 1").themeFont("Body");
+    sheet.getCell(2, 4).text("Text 1").themeFont("Body");
+    sheet.getCell(2, 5).text("Background 2").themeFont("Body");
+    sheet.getCell(2, 6).text("Text 2").themeFont("Body");
+    sheet.getCell(2, 7).text("Accent 1").themeFont("Body");
+    sheet.getCell(2, 8).text("Accent 2").themeFont("Body");
+    sheet.getCell(2, 9).text("Accent 3").themeFont("Body");
+    sheet.getCell(2, 10).text("Accent 4").themeFont("Body");
+    sheet.getCell(2, 11).text("Accent 5").themeFont("Body");
+    sheet.getCell(2, 12).text("Accent 6").themeFont("Body");
+
+    sheet.getCell(4, 1).value("100").themeFont("Body");
+
+    sheet.getCell(4, 3).backColor("Background 1");
+    sheet.getCell(4, 4).backColor("Text 1");
+    sheet.getCell(4, 5).backColor("Background 2");
+    sheet.getCell(4, 6).backColor("Text 2");
+    sheet.getCell(4, 7).backColor("Accent 1");
+    sheet.getCell(4, 8).backColor("Accent 2");
+    sheet.getCell(4, 9).backColor("Accent 3");
+    sheet.getCell(4, 10).backColor("Accent 4");
+    sheet.getCell(4, 11).backColor("Accent 5");
+    sheet.getCell(4, 12).backColor("Accent 6");
+
+    sheet.getCell(5, 1).value("80").themeFont("Body");
+
+    sheet.getCell(5, 3).backColor("Background 1 80");
+    sheet.getCell(5, 4).backColor("Text 1 80");
+    sheet.getCell(5, 5).backColor("Background 2 80");
+    sheet.getCell(5, 6).backColor("Text 2 80");
+    sheet.getCell(5, 7).backColor("Accent 1 80");
+    sheet.getCell(5, 8).backColor("Accent 2 80");
+    sheet.getCell(5, 9).backColor("Accent 3 80");
+    sheet.getCell(5, 10).backColor("Accent 4 80");
+    sheet.getCell(5, 11).backColor("Accent 5 80");
+    sheet.getCell(5, 12).backColor("Accent 6 80");
+
+    sheet.getCell(6, 1).value("60").themeFont("Body");
+
+    sheet.getCell(6, 3).backColor("Background 1 60");
+    sheet.getCell(6, 4).backColor("Text 1 60");
+    sheet.getCell(6, 5).backColor("Background 2 60");
+    sheet.getCell(6, 6).backColor("Text 2 60");
+    sheet.getCell(6, 7).backColor("Accent 1 60");
+    sheet.getCell(6, 8).backColor("Accent 2 60");
+    sheet.getCell(6, 9).backColor("Accent 3 60");
+    sheet.getCell(6, 10).backColor("Accent 4 60");
+    sheet.getCell(6, 11).backColor("Accent 5 60");
+    sheet.getCell(6, 12).backColor("Accent 6 60");
+
+    sheet.getCell(7, 1).value("40").themeFont("Body");
+
+    sheet.getCell(7, 3).backColor("Background 1 40");
+    sheet.getCell(7, 4).backColor("Text 1 40");
+    sheet.getCell(7, 5).backColor("Background 2 40");
+    sheet.getCell(7, 6).backColor("Text 2 40");
+    sheet.getCell(7, 7).backColor("Accent 1 40");
+    sheet.getCell(7, 8).backColor("Accent 2 40");
+    sheet.getCell(7, 9).backColor("Accent 3 40");
+    sheet.getCell(7, 10).backColor("Accent 4 40");
+    sheet.getCell(7, 11).backColor("Accent 5 40");
+    sheet.getCell(7, 12).backColor("Accent 6 40");
+
+    sheet.getCell(8, 1).value("-25").themeFont("Body");
+
+    sheet.getCell(8, 3).backColor("Background 1 -25");
+    sheet.getCell(8, 4).backColor("Text 1 -25");
+    sheet.getCell(8, 5).backColor("Background 2 -25");
+    sheet.getCell(8, 6).backColor("Text 2 -25");
+    sheet.getCell(8, 7).backColor("Accent 1 -25");
+    sheet.getCell(8, 8).backColor("Accent 2 -25");
+    sheet.getCell(8, 9).backColor("Accent 3 -25");
+    sheet.getCell(8, 10).backColor("Accent 4 -25");
+    sheet.getCell(8, 11).backColor("Accent 5 -25");
+    sheet.getCell(8, 12).backColor("Accent 6 -25");
+
+    sheet.getCell(9, 1).value("-50").themeFont("Body");
+
+    sheet.getCell(9, 3).backColor("Background 1 -50");
+    sheet.getCell(9, 4).backColor("Text 1 -50");
+    sheet.getCell(9, 5).backColor("Background 2 -50");
+    sheet.getCell(9, 6).backColor("Text 2 -50");
+    sheet.getCell(9, 7).backColor("Accent 1 -50");
+    sheet.getCell(9, 8).backColor("Accent 2 -50");
+    sheet.getCell(9, 9).backColor("Accent 3 -50");
+    sheet.getCell(9, 10).backColor("Accent 4 -50");
+    sheet.getCell(9, 11).backColor("Accent 5 -50");
+    sheet.getCell(9, 12).backColor("Accent 6 -50");
+    sheet.resumePaint();
+}
+
 // import / export related items
 function processExportAction($dropdown, action) {
     switch (action) {
@@ -6798,99 +6921,6 @@ function getCellPositionString(sheet, row, column) {
 // positionbox related items (end)
 
 // theme color related items
-function setThemeColorToSheet(sheet) {
-    sheet.suspendPaint();
-
-    sheet.getCell(2, 3).text("Background 1").themeFont("Body");
-    sheet.getCell(2, 4).text("Text 1").themeFont("Body");
-    sheet.getCell(2, 5).text("Background 2").themeFont("Body");
-    sheet.getCell(2, 6).text("Text 2").themeFont("Body");
-    sheet.getCell(2, 7).text("Accent 1").themeFont("Body");
-    sheet.getCell(2, 8).text("Accent 2").themeFont("Body");
-    sheet.getCell(2, 9).text("Accent 3").themeFont("Body");
-    sheet.getCell(2, 10).text("Accent 4").themeFont("Body");
-    sheet.getCell(2, 11).text("Accent 5").themeFont("Body");
-    sheet.getCell(2, 12).text("Accent 6").themeFont("Body");
-
-    sheet.getCell(4, 1).value("100").themeFont("Body");
-
-    sheet.getCell(4, 3).backColor("Background 1");
-    sheet.getCell(4, 4).backColor("Text 1");
-    sheet.getCell(4, 5).backColor("Background 2");
-    sheet.getCell(4, 6).backColor("Text 2");
-    sheet.getCell(4, 7).backColor("Accent 1");
-    sheet.getCell(4, 8).backColor("Accent 2");
-    sheet.getCell(4, 9).backColor("Accent 3");
-    sheet.getCell(4, 10).backColor("Accent 4");
-    sheet.getCell(4, 11).backColor("Accent 5");
-    sheet.getCell(4, 12).backColor("Accent 6");
-
-    sheet.getCell(5, 1).value("80").themeFont("Body");
-
-    sheet.getCell(5, 3).backColor("Background 1 80");
-    sheet.getCell(5, 4).backColor("Text 1 80");
-    sheet.getCell(5, 5).backColor("Background 2 80");
-    sheet.getCell(5, 6).backColor("Text 2 80");
-    sheet.getCell(5, 7).backColor("Accent 1 80");
-    sheet.getCell(5, 8).backColor("Accent 2 80");
-    sheet.getCell(5, 9).backColor("Accent 3 80");
-    sheet.getCell(5, 10).backColor("Accent 4 80");
-    sheet.getCell(5, 11).backColor("Accent 5 80");
-    sheet.getCell(5, 12).backColor("Accent 6 80");
-
-    sheet.getCell(6, 1).value("60").themeFont("Body");
-
-    sheet.getCell(6, 3).backColor("Background 1 60");
-    sheet.getCell(6, 4).backColor("Text 1 60");
-    sheet.getCell(6, 5).backColor("Background 2 60");
-    sheet.getCell(6, 6).backColor("Text 2 60");
-    sheet.getCell(6, 7).backColor("Accent 1 60");
-    sheet.getCell(6, 8).backColor("Accent 2 60");
-    sheet.getCell(6, 9).backColor("Accent 3 60");
-    sheet.getCell(6, 10).backColor("Accent 4 60");
-    sheet.getCell(6, 11).backColor("Accent 5 60");
-    sheet.getCell(6, 12).backColor("Accent 6 60");
-
-    sheet.getCell(7, 1).value("40").themeFont("Body");
-
-    sheet.getCell(7, 3).backColor("Background 1 40");
-    sheet.getCell(7, 4).backColor("Text 1 40");
-    sheet.getCell(7, 5).backColor("Background 2 40");
-    sheet.getCell(7, 6).backColor("Text 2 40");
-    sheet.getCell(7, 7).backColor("Accent 1 40");
-    sheet.getCell(7, 8).backColor("Accent 2 40");
-    sheet.getCell(7, 9).backColor("Accent 3 40");
-    sheet.getCell(7, 10).backColor("Accent 4 40");
-    sheet.getCell(7, 11).backColor("Accent 5 40");
-    sheet.getCell(7, 12).backColor("Accent 6 40");
-
-    sheet.getCell(8, 1).value("-25").themeFont("Body");
-
-    sheet.getCell(8, 3).backColor("Background 1 -25");
-    sheet.getCell(8, 4).backColor("Text 1 -25");
-    sheet.getCell(8, 5).backColor("Background 2 -25");
-    sheet.getCell(8, 6).backColor("Text 2 -25");
-    sheet.getCell(8, 7).backColor("Accent 1 -25");
-    sheet.getCell(8, 8).backColor("Accent 2 -25");
-    sheet.getCell(8, 9).backColor("Accent 3 -25");
-    sheet.getCell(8, 10).backColor("Accent 4 -25");
-    sheet.getCell(8, 11).backColor("Accent 5 -25");
-    sheet.getCell(8, 12).backColor("Accent 6 -25");
-
-    sheet.getCell(9, 1).value("-50").themeFont("Body");
-
-    sheet.getCell(9, 3).backColor("Background 1 -50");
-    sheet.getCell(9, 4).backColor("Text 1 -50");
-    sheet.getCell(9, 5).backColor("Background 2 -50");
-    sheet.getCell(9, 6).backColor("Text 2 -50");
-    sheet.getCell(9, 7).backColor("Accent 1 -50");
-    sheet.getCell(9, 8).backColor("Accent 2 -50");
-    sheet.getCell(9, 9).backColor("Accent 3 -50");
-    sheet.getCell(9, 10).backColor("Accent 4 -50");
-    sheet.getCell(9, 11).backColor("Accent 5 -50");
-    sheet.getCell(9, 12).backColor("Accent 6 -50");
-    sheet.resumePaint();
-}
 
 function getColorName(sheet, row, col) {
     var colName = sheet.getCell(2, col).text();
@@ -6898,26 +6928,6 @@ function getColorName(sheet, row, col) {
     return colName + " " + rowName;
 }
 
-function getThemeColor() {
-    var sheet = spread.getActiveSheet();
-    setThemeColorToSheet(sheet);                                            // Set current theme color to sheet
-
-    var $colorUl = $("#default-theme-color");
-    var $themeColorLi, cellBackColor;
-    for (var col = 3; col < 13; col++) {
-        var row = 4;
-        cellBackColor = sheet.getActualStyle(row, col).backColor;
-        $themeColorLi = $("<li class=\"color-cell seed-color-column\"></li>");
-        $themeColorLi.css("background-color", cellBackColor).attr("data-name", sheet.getCell(2, col).text()).appendTo($colorUl);
-        for (row = 5; row < 10; row++) {
-            cellBackColor = sheet.getActualStyle(row, col).backColor;
-            $themeColorLi = $("<li class=\"color-cell\"></li>");
-            $themeColorLi.css("background-color", cellBackColor).attr("data-name", getColorName(sheet, row, col)).appendTo($colorUl);
-        }
-    }
-
-    sheet.clear(2, 1, 8, 12, spreadNS.SheetArea.viewport, 255);      // Clear sheet theme color
-}
 
 // theme color related items (end)
 

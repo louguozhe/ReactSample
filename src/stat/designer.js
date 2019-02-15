@@ -2,12 +2,9 @@ import React, {Component} from 'react';
 import './Style.css'
 import Menu from './topMenu'
 import RightPanel from './rightPanel'
-import {InitSpreadAction, ActiveSheetAction, ActiveTabAction, TabType} from '../store/reducers/spread/actions'
+import {InitSpreadAction} from '../store/reducers/spread/actions'
 import connect from "react-redux/es/connect/connect";
-import {getCellInfo,fullNameCellType} from '../utils/spreadHelper'
-import {StatDimension, StatIndex} from "../mock/dataSource";
-import {spreadNS,initSpread} from '../utils/eventHelper'
-import Provider from "react-redux/es/components/Provider";
+import {initSpread} from '../utils/eventHelper'
 import DropDownList from './dropDownList'
 class Designer extends Component {
 
@@ -26,55 +23,8 @@ class Designer extends Component {
         // var spread = new window.GC.Spread.Sheets.Workbook(document.getElementById('ss'), { sheetCount: 1 });
     }
     componentDidMount(){
-        //this.initSpread()
-        var spread = initSpread("#ss",'formulabox',{sheetCount: 3},this.props.store0.dispatch)
-        this.loadDataSource(spread)
-        // this.props.initSpread(spread)
-
-        // var spread = new window.GC.Spread.Sheets.Workbook(document.getElementById('ss'), { sheetCount: 1 });
+        initSpread("#ss",'formulabox',{sheetCount: 1},this.props.store0.dispatch)
     }
-    loadDataSource(spread){
-        var spreadNS = window.GC.Spread.Sheets
-        spread.suspendPaint();
-        try {
-            var sheet = spread.getSheet(0)
-            sheet.name("统计模板")
-            sheet.setRowCount(3, window.GC.Spread.Sheets.SheetArea.colHeader);
-            sheet.setColumnCount(3, window.GC.Spread.Sheets.SheetArea.rowHeader);
-            sheet.setValue(0, 0, "Combined Columns", window.GC.Spread.Sheets.SheetArea.colHeader);
-            sheet = spread.getSheet(1)
-            sheet.name("统计维度")
-            var table = sheet.tables.addFromDataSource("统计维度", 0, 0, this.props.statDimension.data)
-            sheet = spread.getSheet(2)
-            sheet.name("统计指标")
-            table = sheet.tables.addFromDataSource("统计指标", 0, 0, this.props.statIndex.data)
-            // table.filterButtonVisible(true)
-            // table.bindColumns(true)
-            // sheet2.bindColumns(this.props.dataSource.colInfos);
-            // table.setDataSource(this.props.dataSource.data);
-            // sheet2.name("数据源");
-            // sheet2.autoGenerateColumns = false;
-            // sheet2.bindColumns(this.props.dataSource.colInfos);
-            // // sheet2.tables.findByName("数据源").filterButtonVisible(true)
-            // // sheet2.getTable(0).filterButtonVisible(true)
-        } catch (e) {
-            alert(e.message);
-        }
-        spread.resumePaint();
-        // console.log('sheet2.tables',sheet2.tables)
-    }
-
-    adjustSpreadSize(spread) {
-        var height = window.$("#inner-content-container").height() - window.$("#formulaBar").height() - 4,
-            spreadHeight = window.$("#ss").height();
-
-        if (spreadHeight !== height) {
-            window.$("#controlPanel").height(height);
-            window.$("#ss").height(height);
-            window.$("#ss").data("workbook").refresh();
-        }
-    }
-
 
 
     render() {
@@ -111,7 +61,7 @@ class Designer extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('getList',state.update)
+    // console.log('getList',state.update)
     return {
         spread: state.spread.spread,
         statDimension:state.dataSource.statDimension,
@@ -123,12 +73,6 @@ const mapDispatchToProps = dispatch => {
     return {
         initSpread: spread => {
             dispatch(InitSpreadAction(spread))
-        },
-        activeSheetAction: sheet => {
-            dispatch(ActiveSheetAction(sheet))
-        },
-        activeTabAction: tabType => {
-            dispatch(ActiveTabAction(tabType))
         },
     }
 }

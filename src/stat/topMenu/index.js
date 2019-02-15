@@ -1,6 +1,5 @@
 import React,{Component} from "react";
 import connect from "react-redux/es/connect/connect";
-import {exportToExcel,exportToJSON} from '../../utils/spreadHelper'
 
 class topMenu extends Component {
 
@@ -74,30 +73,17 @@ class topMenu extends Component {
                            <button type="button" className="btn btn-default btn-toolbar localize-tooltip"
                                    id="doExport"
                                    title="定义统计维度">
-                               <span className="fa fa-floppy-o fa-2x"></span>
+                               <span className="fa fa-eraser fa-2x"></span>
                            </button>
                            <button type="button" className="btn btn-default btn-toolbar localize-tooltip"
                                    id="doExport"
                                    title="定义统计指标">
-                               <span className="fa fa-floppy-o fa-2x"></span>
+                               <span className="fa fa-table fa-2x"></span>
                            </button>
                            <button type="button" className="btn btn-default btn-toolbar localize-tooltip"
                                    id="doExport"
                                    title="定义数据集">
                                <span className="fa fa-floppy-o fa-2x"></span>
-                           </button>
-                           <button type="button" className="btn btn-default btn-toolbar localize-tooltip" id="addStat"
-                                   title="插入表单">
-                               <span className="fa fa-table fa-2x"></span>
-                           </button>
-                           <button type="button" className="btn btn-default btn-toolbar localize-tooltip"
-                                   id="doClear"
-                                   title="重置表单">
-                               <span className="fa fa-eraser fa-2x"></span>
-                           </button>
-                           <button type="button" className="btn btn-default btn-toolbar localize-tooltip" id="removeStat"
-                                   title="删除表单">
-                               <span className="fa fa-table fa-2x"></span>
                            </button>
                        </div>
                    </div>
