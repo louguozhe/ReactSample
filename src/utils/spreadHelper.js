@@ -199,3 +199,27 @@ export function InitStatSheet(sheet){
     // sheet.getColumn.backColor("#1E90FF")
     // sheet.getColumn(1).backColor("#1E90FF")
 }
+
+export const StatTitleStyle = new spreadNS.Style()
+StatTitleStyle.backColor = "rgb(231, 230, 230)"
+// StatTitleStyle.formatter = "0.00";
+StatTitleStyle.hAlign = spreadNS.HorizontalAlign.center;
+StatTitleStyle.vAlign = spreadNS.VerticalAlign.center;
+// var lineBorder = new spreadNS.LineBorder("rgb(0, 0, 0)");
+// StatTitleStyle.borderLeft = lineBorder;
+// StatTitleStyle.borderTop = lineBorder;
+// StatTitleStyle.borderRight = lineBorder;
+// StatTitleStyle.borderBottom = lineBorder;
+
+// activeSheet.setDefaultStyle(defaultStyle, GcSpread.Sheets.SheetArea.viewport);
+export const StatBackGroundColor = "rgb(231, 230, 230)"
+var lineStyle = spreadNS.LineStyle.thin;
+var borderColor = "rgb(0, 0, 0)";
+export const StatCellLineBorder = new spreadNS.LineBorder(borderColor,lineStyle);
+// sheet.getRange(row, ++col, 1, 1).setBorder(cellLineBorder);
+
+export const StatIndexStyle = new spreadNS.Style()
+// StatIndexStyle.backColor = "rgb(231, 230, 230)"
+// StatTitleStyle.formatter = "0.00";
+StatIndexStyle.hAlign = spreadNS.HorizontalAlign.center;
+StatIndexStyle.vAlign = spreadNS.VerticalAlign.center;
