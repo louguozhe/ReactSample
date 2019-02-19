@@ -3,6 +3,7 @@ import TabContentWapper from "../tab/tabContentWapper";
 import TabTitle from '../tab/tabTitle'
 import TabTitleWapper from '../tab/tabTitleWapper'
 import StatTabContent from "./statTabContent"
+import PrintTabContent from "./printTabContent"
 import CellTabContent from "./cellTabContent"
 import {TabType} from "../../store/reducers/spread/actions";
 import connect from "react-redux/es/connect/connect";
@@ -19,7 +20,8 @@ class rightPanel extends Component {
                  style={{left: "auto", top: "0px", display: "block"}}>
                 <TabTitleWapper>
                     <TabTitle data={{name:"表单",id:"statTab",active:true}}/>
-                    <TabTitle data={{name:"单元格",id:"cellTab",active:false}}/>
+                    <TabTitle data={{name:"格式",id:"cellTab",active:false}}/>
+                    <TabTitle data={{name:"打印",id:"printTab",active:false}}/>
                     <TabTitle data={{name:"维度",id:"dimensionTab",active:false,hidden:true}}/>
                     <TabTitle data={{name:"指标",id:"indexTab",active:false,hidden:true}}/>
                     <TabTitle data={{name:"数据",id:"dataTab",active:this.props.activeTabType === TabType.DATA,hidden:true}}/>
@@ -33,6 +35,7 @@ class rightPanel extends Component {
                     {/*<SpreadTabContent/>*/}
                     <StatTabContent />
                     <CellTabContent />
+                    <PrintTabContent />
                 </TabContentWapper>
             </div>
 

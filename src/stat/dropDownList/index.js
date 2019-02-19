@@ -93,6 +93,7 @@ export default class extends Component {
                     ,{name:"None",value:"clear-celltype"}
                 ])}
                 <div id="setfontstyle" style={{display: "none"}}></div>
+
             </div>
         )
     }

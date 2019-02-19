@@ -3181,7 +3181,6 @@ function attachToolbarItemEvents() {
         var $dropdown = $("#exportActionList"),
             $this = $(this),
             offset = $this.offset();
-
         $dropdown.css({left: offset.left, top: offset.top + $this.outerHeight()});
         $dropdown.show();
         processEventListenerHandleClosePopup(true);

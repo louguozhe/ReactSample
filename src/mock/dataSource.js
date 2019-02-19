@@ -1,8 +1,13 @@
 //统计数据集定义
+import {Button} from "antd";
+import React from "react";
+
 export const StatDataSets = [
-    {id:1,name:"基本情况"},
-    {id:2,name:"编制情况"}
+    {id:1,name:"基本情况",api:"stat/datasets/jbqk"},
+    {id:2,name:"编制情况",api:"stat/datasets/bzqk"},
 ]
+
+
 //统计维度定义
 export const StatDimensions = [
     {id:1,name:"文化程度"},
@@ -11,6 +16,8 @@ export const StatDimensions = [
     {id:4,name:"在编情况"},
     {id:5,name:"编配情况"},
 ]
+
+//统计测量
 export const StatMeasures = [
     {id:1,dimensionID:1,name:"博士",expression:"whcd='1'"},
     {id:2,dimensionID:1,name:"硕士",expression:"whcd='2'"},
@@ -25,9 +32,9 @@ export const StatMeasures = [
     {id:11,dimensionID:3,name:"校官",expression:"jxdj in ('21','22','23','24')"},
     {id:12,dimensionID:3,name:"尉官",expression:"jxdj in ('31','32','33','34')"},
     {id:13,dimensionID:4,name:"在编",expression:"zbqk in ('11','12')"},
-    {id:13,dimensionID:4,name:"超编",expression:"zbqk in ('21','22'"},
-    {id:14,dimensionID:5,name:"现编",expression:"zbqk in ('11','12')"},
-    {id:14,dimensionID:5,name:"缺编",expression:"zbqk in ('21','22'"},
+    {id:14,dimensionID:4,name:"超编",expression:"zbqk in ('21','22'"},
+    {id:15,dimensionID:5,name:"现编",expression:"zbqk in ('11','12')"},
+    {id:16,dimensionID:5,name:"缺编",expression:"zbqk in ('21','22'"},
 ]
 
 export const StatDataSetDimensions = [
